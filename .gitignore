@@ -1,0 +1,12 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies (if you ever add them)
+node_modules/
+vendor/
+
+# Build artifacts / logs
+*.log
