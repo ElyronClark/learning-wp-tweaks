@@ -34,6 +34,14 @@ function lwp_register_property_cpt() {
 }
 add_action( 'init', 'lwp_register_property_cpt' );
 
+function lwp_activate_plugin() {
+    //Make sure our post type exists at activation time...
+    lwp_register_property_cpt();
+    // ... then rebuild the rewrite ru les so /properties/ works immediately.
+    flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'lwp_activate_plugin' );
+
 // function lwp_show_property_fields( $content ) {
 //     // Only a single Property, and only on the main content (not excerpts, feeds, etc.)
 //     if (is_singular( 'lwp_property' ) && in_the_loop() && is_main_query() ) {
