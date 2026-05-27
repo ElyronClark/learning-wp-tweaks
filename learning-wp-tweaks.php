@@ -7,6 +7,9 @@
  */
 
 // Safety: don't allow this file to be accessed directly
+
+namespace LWP\Tweaks;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
@@ -17,15 +20,15 @@ class LWP_Tweaks {
      * This is where we wire up all our hooks
      */
     public function __construct() {
-        add_filter( 'the_content', array( $this, 'add_thanks_message' ) );
-        add_action( 'init', array( $this, 'register_property_cpt' ) );
+        \add_filter( 'the_content', array( $this, 'add_thanks_message' ) );
+        \add_action( 'init', array( $this, 'register_property_cpt' ) );
     }
 
     /** 
      * Append a thank-you message to single posts.
      */
     public function add_thanks_message( $content ) {
-        if ( is_single() ) {
+        if ( \is_single() ) {
             $content .= '<p><strong>Thanks for reading!</strong></p>';
         }
         return $content;
@@ -49,7 +52,7 @@ class LWP_Tweaks {
             'show_in_rest'  => true,
             'rewrite'       => array( 'slug' => 'properties'),
         );
-        register_post_type( 'lwp_property', $args );
+        \register_post_type( 'lwp_property', $args );
     }
 
     /**
@@ -57,7 +60,7 @@ class LWP_Tweaks {
      */
     public function activate() {
         $this->register_property_cpt();
-        flush_rewrite_rules();
+        \flush_rewrite_rules();
     }
 }
 
@@ -65,4 +68,4 @@ class LWP_Tweaks {
 $lwp_tweaks = new LWP_Tweaks();
 
 //Activation hook still lives outside the class, but points at the objects method.
-register_activation_hook( __FILE__, array( $lwp_tweaks, 'activate' ) );
+\register_activation_hook( __FILE__, array( $lwp_tweaks, 'activate' ) );
